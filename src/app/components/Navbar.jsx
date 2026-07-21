@@ -1,27 +1,48 @@
 "use client";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-import { Link, Button,Avatar } from "@heroui/react";
+import { Link, Button, Avatar } from "@heroui/react";
 import Image from "next/image";
+import { authClient } from "@/lib/auth-client";
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isSigningOut, setIsSigningOut] = useState(false); // ✅ loading state
 
-   const isLoggedIn=true
-  
+  const isLoggedIn = true;
   const pathname = usePathname();
 
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/browse", label: "Browse Artworks" },
-
   ];
+
+  const handleSignOut = async () => {
+    setIsSigningOut(true); // start loading
+    try {
+      const { error } = await authClient.signOut();
+
+      if (error) {
+        console.error("Sign out error:", error);
+        alert("Sign out failed: " + error.message);
+        return;
+      }
+
+      alert("Signed out successfully!");
+      window.location.href = "/auth/signin"; // redirect
+    } catch (err) {
+      console.error("Unexpected error:", err);
+      alert("Something went wrong during sign out.");
+    } finally {
+      setIsSigningOut(false); // stop loading
+    }
+  };
 
   return (
     <nav className="sticky top-0 z-40 container mx-auto border-b border-separator bg-background/70 backdrop-blur-lg">
-      <div className=" px-6">
-         <header className="flex h-16 items-center justify-between">
+      <div className="px-6">
+        <header className="flex h-16 items-center justify-between">
           {/* Left side: Logo + Mobile toggle */}
           <div className="flex items-center gap-4">
             <button
@@ -29,7 +50,6 @@ export function Navbar() {
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Toggle menu"
             >
-              <span className="sr-only">Menu</span>
               <svg
                 className="h-6 w-6"
                 fill="none"
@@ -54,15 +74,9 @@ export function Navbar() {
               </svg>
             </button>
             <div className="flex items-center gap-2">
-  <Image
-    src="/logo.png"   // ✅ file inside public/logo.png
-    alt="ArtHub Logo"
-    width={32}
-    height={32}
-  />
-  <span className="font-bold text-purple-600">ArtHub</span>
-</div>
-
+              <Image src="/logo.png" alt="ArtHub Logo" width={32} height={32} />
+              <span className="font-bold text-purple-600">ArtHub</span>
+            </div>
           </div>
 
           {/* Desktop Menu */}
@@ -87,13 +101,16 @@ export function Navbar() {
           <div className="hidden md:flex items-center gap-4 relative">
             {isLoggedIn ? (
               <div className="relative">
-                 <Avatar
-                   className="cursor-pointer"
+                <Avatar
+                  className="cursor-pointer"
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                 >
-        <Avatar.Image alt="John Doe" src="https://img.heroui.chat/image/avatar?w=400&h=400&u=3" />
-        <Avatar.Fallback>JD</Avatar.Fallback>
-      </Avatar>
+                >
+                  <Avatar.Image
+                    alt="John Doe"
+                    src="https://img.heroui.chat/image/avatar?w=400&h=400&u=3"
+                  />
+                  <Avatar.Fallback>JD</Avatar.Fallback>
+                </Avatar>
                 {isDropdownOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg">
                     <Link
@@ -109,10 +126,11 @@ export function Navbar() {
                       My Dashboard
                     </Link>
                     <button
-                      onClick={() => alert("Sign out logic here")}
-                      className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                      onClick={handleSignOut}
+                      disabled={isSigningOut} // ✅ disable while loading
+                      className="w-full text-left px-4 py-2 hover:bg-gray-100 disabled:opacity-50"
                     >
-                      Sign Out
+                      {isSigningOut ? "Signing out..." : "Sign Out"}
                     </button>
                   </div>
                 )}
@@ -120,7 +138,7 @@ export function Navbar() {
             ) : (
               <Button
                 as={Link}
-                href="/login"
+                href="/auth/signin"
                 className="bg-purple-600 text-white hover:bg-purple-700"
               >
                 Login
@@ -163,16 +181,17 @@ export function Navbar() {
                       My Dashboard
                     </Link>
                     <button
-                      onClick={() => alert("Sign out logic here")}
-                      className="block py-2 text-left hover:text-purple-600"
+                      onClick={handleSignOut}
+                      disabled={isSigningOut} // ✅ disable while loading
+                      className="block py-2 text-left hover:text-purple-600 disabled:opacity-50"
                     >
-                      Sign Out
+                      {isSigningOut ? "Signing out..." : "Sign Out"}
                     </button>
                   </div>
                 ) : (
                   <Button
                     as={Link}
-                    href="/login"
+                    href="/auth/signin"
                     className="w-full bg-purple-600 text-white hover:bg-purple-700"
                   >
                     Login

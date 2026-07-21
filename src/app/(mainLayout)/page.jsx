@@ -7,7 +7,7 @@ const HomePage
  = () => {
     return (
         <div>
-        {/* <Banner/> */}
+
         <Slider/>
         </div>
     );

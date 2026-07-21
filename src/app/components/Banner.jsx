@@ -1,4 +1,4 @@
-// components/Hero.js
+
 "use client";
 import Link from "next/link";
 import Image from "next/image";
@@ -28,30 +28,25 @@ export default function Banner() {
           <div className="flex gap-4">
             <Link
               href="/browse"
-              className="inline-block bg-purple-600 text-white font-semibold px-6 py-3 rounded shadow hover:bg-purple-700 transition"
+              className="inline-block bg-purple-600 text-white font-semibold p-5 rounded shadow hover:bg-purple-700 transition"
             >
               Browse Artworks
             </Link>
             <Link
               href="/artist/signup"
-              className="inline-block border border-purple-600 text-purple-600 px-6 py-3 rounded font-semibold hover:bg-purple-600 hover:text-white transition"
+              className="inline-block border border-purple-600 text-purple-600 p-5 rounded font-semibold hover:bg-purple-600 hover:text-white transition"
             >
               Become an Artist
             </Link>
           </div>
 
-          {/* Stats */}
-          {/* <div className="flex flex-wrap gap-6 mt-8 text-sm md:text-base text-gray-700">
-            <span>200K+ Artworks</span>
-            <span>8K+ Artists</span>
-            <span>12K+ Happy Buyers</span>
-            <span>50+ Countries</span>
-          </div> */}
+     
         </div>
 
         {/* Right Side Illustration */}
         <div className="md:w-1/2 mt-10 md:mt-0 flex justify-center">
           <Image
+          loading="eager"
             src={banner}// ✅ place your image in public folder
             alt="Artist painting illustration"
             width={600}
