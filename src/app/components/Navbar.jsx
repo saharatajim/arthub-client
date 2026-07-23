@@ -120,7 +120,7 @@ export function Navbar() {
                       My Profile
                     </Link>
                     <Link
-                      href="/dashboard"
+                      href="/dashboard/artist/overview"
                       className="block px-4 py-2 hover:bg-gray-100"
                     >
                       My Dashboard
@@ -175,7 +175,7 @@ export function Navbar() {
                       My Profile
                     </Link>
                     <Link
-                      href="/dashboard"
+                      href="/dashboard/artist/overview"
                       className="block py-2 hover:text-purple-600"
                     >
                       My Dashboard
