@@ -3,6 +3,7 @@ import { Navbar } from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const Rootlayout = ({children}) => {
+    
     return (
         <div>
             <Navbar/>

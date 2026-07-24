@@ -1,12 +1,12 @@
+import AddArtworkPage from '@/app/components/dashboard/artist/AddArtworkPage';
 import React from 'react';
 
 const AddArtwork = () => {
     return (
-        <div>
-            Add Art work
-            
+        <div className='container mx-auto'>
+            <AddArtworkPage/>
         </div>
     );
 };
 
-export default AddArtwork;
+export default AddArtwork

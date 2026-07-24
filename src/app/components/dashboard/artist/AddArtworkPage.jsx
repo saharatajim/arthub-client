@@ -2,22 +2,9 @@
 import Image from "next/image";
 import { useState } from "react";
 
-export default function EditArtworkPage() {
-  // Demo artwork data
-  const demoArtwork = {
-    title: "Sunset Over Hills",
-    description: "A beautiful painting of a sunset over rolling hills.",
-    price: 200,
-    category: "Painting",
-    image: "/demo-artwork.jpg", // demo image path (replace with real one)
-  };
-
-  // Pre-filled states
-  const [title, setTitle] = useState(demoArtwork.title);
-  const [description, setDescription] = useState(demoArtwork.description);
-  const [price, setPrice] = useState(demoArtwork.price);
-  const [category, setCategory] = useState(demoArtwork.category);
-  const [preview, setPreview] = useState(demoArtwork.image);
+export default function AddArtworkPage() {
+  const [preview, setPreview] = useState(null);
+  const [artworks, setArtworks] = useState([]);
 
   // Image preview
   const handleImageChange = (e) => {
@@ -25,19 +12,33 @@ export default function EditArtworkPage() {
     if (file) setPreview(URL.createObjectURL(file));
   };
 
-  // Form submit (demo only)
+  // Form submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    const updatedArtwork = { title, description, price, category, image: preview };
-    console.log("Updated Artwork:", updatedArtwork);
-    alert("Artwork updated successfully!");
+    const formData = new FormData(e.target);
+    const entries = Object.fromEntries(formData.entries());
+
+    const newArtwork = {
+      title: entries.title,
+      description: entries.description,
+      price: entries.price,
+      category: entries.category,
+      image: preview,
+    };
+
+    console.log(newArtwork);
+    setArtworks([...artworks, newArtwork]);
+    alert("Artwork added successfully!");
+
+    e.target.reset();
+    setPreview(null);
   };
 
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-2xl mx-auto bg-white shadow rounded-lg p-6">
         <h2 className="text-2xl font-bold text-purple-700 mb-6 text-center">
-          Edit Artwork
+          Add Artwork
         </h2>
         <form className="space-y-6" onSubmit={handleSubmit}>
           {/* Title */}
@@ -45,8 +46,8 @@ export default function EditArtworkPage() {
             <label className="block text-sm font-medium">Title</label>
             <input
               type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              name="title"
+              placeholder="Enter artwork title"
               className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-purple-600"
               required
             />
@@ -56,21 +57,21 @@ export default function EditArtworkPage() {
           <div>
             <label className="block text-sm font-medium">Description</label>
             <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              name="description"
+              placeholder="Enter artwork description"
               className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-purple-600"
               required
             />
           </div>
 
-          {/* Price & Category */}
+          {/* Price & Category (side by side on larger screens) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium">Price</label>
               <input
                 type="number"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
+                name="price"
+                placeholder="Enter price"
                 className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-purple-600"
                 required
               />
@@ -78,8 +79,7 @@ export default function EditArtworkPage() {
             <div>
               <label className="block text-sm font-medium">Category</label>
               <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
+                name="category"
                 className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-purple-600"
                 required
               >
@@ -124,7 +124,7 @@ export default function EditArtworkPage() {
             type="submit"
             className="w-full bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition"
           >
-            Update Artwork
+            Add Artwork
           </button>
         </form>
       </div>

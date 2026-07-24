@@ -12,6 +12,7 @@ import {
   FaSignOutAlt,
   FaArrowLeft
 } from "react-icons/fa";
+import { BsLayoutSidebar } from "react-icons/bs";
 
 const UserDashboard = () => {
   const pathname = usePathname();   // ✅ current route path
@@ -21,21 +22,33 @@ const UserDashboard = () => {
     { icon: <FaTachometerAlt />, label: "Overview", href: "/dashboard" },
     { icon: <FaPaintBrush />, label: "Manage Artworks", href: "/dashboard/artist/manage-artwork" },
     { icon: <FaPlusCircle />, label: "Add Artwork", href: "/dashboard/artist/add-artwork" },
+    { icon: <FaPlusCircle />, label: "Add Company", href: "/dashboard/artist/add-organization" },
     { icon: <FaEdit />, label: "Edit Artwork", href: "/dashboard/artist/edit-artwork" },
     { icon: <FaChartLine />, label: "Sales History", href: "/dashboard/artist/sale-history" },
     { icon: <FaUserCog />, label: "Profile Management", href: "/dashboard/artist/profile" },
   ];
 
   return (
-    <div className="">
-      <aside
+    <div className=" ">
+      <div>
+        <aside
         className={`fixed md:static top-0 left-0 min-h-screen w-64 bg-white shadow-md transform transition-transform duration-300 z-50
           ${isSidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}
       >
-        <div className="p-6 border-b border-gray-200">
+        
+        <div className="flex justify-between  border-b border-gray-200">
+          <div className="p-6">
           <h1 className="text-2xl font-bold text-purple-700">ArtHub</h1>
           <p className="text-sm text-gray-500 mt-1">Welcome,</p>
         </div>
+         <button
+        className="md:hidden m-2.5 bg-pink-600 text-white p-2 rounded-md"
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+      >
+        <BsLayoutSidebar/>
+      </button>
+        </div>
+        
 
         <nav className="p-4 space-y-3 flex flex-col h-full justify-between">
           <div className="space-y-3">
@@ -45,7 +58,7 @@ const UserDashboard = () => {
                 href={item.href}
                 className={`flex items-center gap-3 p-2 rounded-md ${
                   pathname === item.href
-                    ? "bg-purple-100 text-purple-700 font-semibold"
+                    ? "bg-purple-100 text-pink-600 font-semibold"
                     : "hover:bg-gray-100"
                 }`}
               >
@@ -56,23 +69,27 @@ const UserDashboard = () => {
 
           {/* Bottom buttons */}
           <div className="border-t border-gray-200 space-y-2 p-4">
-            <button className="w-full flex items-center gap-3 p-2 rounded-md hover:bg-gray-100 text-red-600 font-medium">
+            <button className="w-full flex items-center gap-3 p-2 rounded-md hover:bg-gray-100 text-pink-600 font-medium">
               <FaSignOutAlt /> Logout
             </button>
             <button className="w-full flex items-center gap-3 p-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium">
               <FaArrowLeft /> Go Back
             </button>
+           
           </div>
         </nav>
       </aside>
+      </div>
 
       {/* Hamburger button for mobile */}
-      <button
-        className="md:hidden bg-purple-600 text-white p-2 rounded-md"
+      <div>
+                <button
+        className="md:hidden m-2.5 bg-purple-600 text-white p-2 rounded-md"
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
       >
-        ☰
+        <BsLayoutSidebar/>
       </button>
+      </div>
     </div>
   );
 };

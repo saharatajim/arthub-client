@@ -3,7 +3,7 @@ import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-
+import { useRouter } from "next/navigation";
 
 export default function SignupPage() {
       const [preview, setPreview] = useState(null);
@@ -16,6 +16,7 @@ export default function SignupPage() {
   };
 
 
+  const router = useRouter();
 const handleSubmit = async (e) => {
   e.preventDefault();
 
@@ -65,7 +66,8 @@ const handleSubmit = async (e) => {
     }
 
   
-    alert("Signup successful!");
+     alert("Signup successful!");
+    router.push("/"); // ✅ redirect to home page
   } catch (err) {
 
     alert("Something went wrong during signup.");

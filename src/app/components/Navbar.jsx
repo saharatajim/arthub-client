@@ -1,17 +1,29 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Link, Button, Avatar } from "@heroui/react";
 import Image from "next/image";
 import { authClient } from "@/lib/auth-client";
 
-export function Navbar() {
+
+export  function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSigningOut, setIsSigningOut] = useState(false); // ✅ loading state
 
-  const isLoggedIn = true;
+  const [isLoggedIn,setIsLoggedIn] = useState(false);
+   const { 
+        data: session, 
+    } = authClient.useSession() 
+
   const pathname = usePathname();
+  useEffect(() => {
+    if (session?.user) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, [session]);
 
   const navLinks = [
     { href: "/", label: "Home" },
@@ -24,7 +36,7 @@ export function Navbar() {
       const { error } = await authClient.signOut();
 
       if (error) {
-        console.error("Sign out error:", error);
+   
         alert("Sign out failed: " + error.message);
         return;
       }
@@ -32,7 +44,7 @@ export function Navbar() {
       alert("Signed out successfully!");
       window.location.href = "/auth/signin"; // redirect
     } catch (err) {
-      console.error("Unexpected error:", err);
+     
       alert("Something went wrong during sign out.");
     } finally {
       setIsSigningOut(false); // stop loading
@@ -106,9 +118,12 @@ export function Navbar() {
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 >
                   <Avatar.Image
-                    alt="John Doe"
-                    src="https://img.heroui.chat/image/avatar?w=400&h=400&u=3"
-                  />
+  alt="John Doe"
+  src={session?.user?.image 
+    ? session.user.image 
+    : "https://img.heroui.chat/image/avatar?w=400&h=400&u=3"}
+/>
+
                   <Avatar.Fallback>JD</Avatar.Fallback>
                 </Avatar>
                 {isDropdownOpen && (
@@ -120,7 +135,7 @@ export function Navbar() {
                       My Profile
                     </Link>
                     <Link
-                      href="/dashboard/artist/overview"
+                      href="/dashboard"
                       className="block px-4 py-2 hover:bg-gray-100"
                     >
                       My Dashboard
@@ -175,7 +190,7 @@ export function Navbar() {
                       My Profile
                     </Link>
                     <Link
-                      href="/dashboard/artist/overview"
+                      href="/dashboard"
                       className="block py-2 hover:text-purple-600"
                     >
                       My Dashboard
@@ -189,13 +204,13 @@ export function Navbar() {
                     </button>
                   </div>
                 ) : (
-                  <Button
-                    as={Link}
+                  <Link
+                 
                     href="/auth/signin"
-                    className="w-full bg-purple-600 text-white hover:bg-purple-700"
+                    className="w-full p-2 bg-purple-600 text-white hover:bg-purple-700"
                   >
                     Login
-                  </Button>
+                  </Link>
                 )}
               </li>
             </ul>
