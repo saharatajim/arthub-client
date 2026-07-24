@@ -5,7 +5,7 @@ import React from 'react';
 
 const AddOrganization = async() => {
     const user=await getUser()
-    console.log(user);
+  
     return (
         <div className='container mx-auto'>
             <AddOrganizationPage user={user}/>

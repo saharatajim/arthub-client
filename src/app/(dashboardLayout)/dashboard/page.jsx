@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function ArtistOverviewPage() {
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8 space-y-8">
+    <div className="max-w-5xl mx-auto px-4 py-8 space-y-8">
       {/* Artist Header */}
       <section className="bg-white shadow rounded-lg p-6 flex flex-col sm:flex-row items-center sm:items-start gap-6">
         <Image
@@ -26,26 +26,31 @@ export default function ArtistOverviewPage() {
       <section className="bg-white shadow rounded-lg p-6">
         <h2 className="text-lg font-semibold mb-2">About the Artist</h2>
         <p className="text-gray-700 leading-relaxed">
-          This artist is known for blending traditional painting techniques with
-          modern digital art. Their work often explores themes of nature,
-          identity, and cultural heritage. With exhibitions across Asia and
-          Europe, they continue to inspire audiences worldwide.
+          Known for blending traditional painting techniques with modern digital art,
+          this artist explores themes of nature and identity. Their exhibitions across
+          Asia have inspired audiences worldwide.
         </p>
       </section>
 
-      {/* Stats */}
-      <section className="bg-white shadow rounded-lg p-6 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
-        <div>
-          <p className="text-2xl font-bold text-purple-700">120+</p>
-          <p className="text-gray-600">Artworks</p>
-        </div>
-        <div>
-          <p className="text-2xl font-bold text-purple-700">15</p>
-          <p className="text-gray-600">Exhibitions</p>
-        </div>
-        <div>
-          <p className="text-2xl font-bold text-purple-700">8</p>
-          <p className="text-gray-600">Awards</p>
+      {/* Company Info */}
+      <section className="bg-white shadow rounded-lg p-6">
+        <h2 className="text-lg font-semibold mb-2">Organization</h2>
+        <div className="flex flex-col sm:flex-row items-center gap-6">
+          <Image
+            src="/company-logo.jpg"
+            alt="Company Logo"
+            width={100}
+            height={100}
+            className="rounded border object-cover"
+          />
+          <div className="text-center sm:text-left">
+            <p className="text-xl font-bold text-purple-700">Creative Arts Studio</p>
+            <p className="text-gray-600">Founded: 2010 | Location: Dhaka</p>
+            <p className="mt-2 text-sm text-gray-500">
+              Mission: To inspire through art and culture.  
+              Vision: Connecting heritage with modern creativity.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -72,16 +77,6 @@ export default function ArtistOverviewPage() {
               className="object-cover w-full h-40"
             />
             <p className="p-2 text-sm text-gray-700">Digital Bloom</p>
-          </div>
-          <div className="bg-gray-100 rounded-lg overflow-hidden">
-            <Image
-              src="/artwork3.jpg"
-              alt="Artwork 3"
-              width={300}
-              height={200}
-              className="object-cover w-full h-40"
-            />
-            <p className="p-2 text-sm text-gray-700">Cultural Echoes</p>
           </div>
         </div>
       </section>
