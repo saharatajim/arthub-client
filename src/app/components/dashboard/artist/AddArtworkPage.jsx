@@ -1,8 +1,9 @@
 "use client";
+import { addArtwork } from "@/utilies/action";
 import Image from "next/image";
 import { useState } from "react";
 
-export default function AddArtworkPage() {
+export default function AddArtworkPage({ArtistEmail,company}) {
   const [preview, setPreview] = useState(null);
   const [artworks, setArtworks] = useState([]);
 
@@ -11,28 +12,73 @@ export default function AddArtworkPage() {
     const file = e.target.files[0];
     if (file) setPreview(URL.createObjectURL(file));
   };
+ 
 
-  // Form submit
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const entries = Object.fromEntries(formData.entries());
 
-    const newArtwork = {
-      title: entries.title,
-      description: entries.description,
-      price: entries.price,
-      category: entries.category,
-      image: preview,
-    };
+const userCompany = company.find(c => c.artistMail === ArtistEmail);
 
-    console.log(newArtwork);
-    setArtworks([...artworks, newArtwork]);
-    alert("Artwork added successfully!");
+// Form submit
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const entries = Object.fromEntries(formData.entries());
+  const imageFile = formData.get("image");
+  let imageUrl = null;
+ if (imageFile && imageFile.size > 0) {
+    const uploadData = new FormData();
+    uploadData.append("image", imageFile);
 
-    e.target.reset();
-    setPreview(null);
-  };
+    try {
+      const res = await fetch(
+        `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`,
+        {
+          method: "POST",
+          body: uploadData,
+        }
+      );
+      const result = await res.json();
+      imageUrl = result?.data?.url;
+    } catch (err) {
+      console.error("Upload failed:", err);
+    }
+  }
+
+  if (!userCompany?._id) {
+    alert("Please add a company first!");
+    return;
+  }
+
+ const newArtwork = {
+  title: entries.title,
+  description: entries.description,
+  price: entries.price,
+  category: entries.category,
+  image: imageUrl,
+  artistMail: ArtistEmail,
+  companyId: userCompany._id,
+  createdAt: new Date().toISOString() 
+};
+
+
+  try {
+    const resData = await addArtwork(newArtwork);
+
+    if (resData.insertedId) {
+      setArtworks([...artworks,newArtwork]);
+      alert("Artwork added successfully!");
+    } else {
+      alert("Failed to add artwork!");
+    }
+  } catch (err) {
+    console.error("Error adding artwork:", err);
+    alert("Something went wrong while adding artwork.");
+  }
+
+  e.target.reset();
+  setPreview(null);
+};
+
+
 
   return (
     <div className="container mx-auto px-4 py-8">

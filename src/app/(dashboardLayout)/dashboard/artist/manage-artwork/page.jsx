@@ -1,20 +1,14 @@
-"use client";
-import React, { useState } from "react";
+
+
+import { getArtistArtwork } from "@/utilies/action";
+import { getUser } from "@/utilies/cors";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
-const ManageArtworks = () => {
-  // Fake data
-  const [artworks, setArtworks] = useState([
-    { id: 1, title: "Sunset Glow", price: 200 },
-    { id: 2, title: "Ocean Breeze", price: 350 },
-    { id: 3, title: "Golden Horizon", price: 650 },
-    { id: 4, title: "Mystic Forest", price: 180 },
-    { id: 5, title: "City Lights", price: 400 },
-  ]);
-
-  const handleDelete = (id) => {
-    setArtworks(artworks.filter((art) => art.id !== id));
-  };
+const ManageArtworks = async() => {
+ 
+  const user=await getUser()
+     const artistMail=user.email
+     const artworks=await getArtistArtwork(artistMail)
 
   return (
     <div className="p-6 flex-1 bg-gray-100 min-h-screen">
@@ -31,8 +25,8 @@ const ManageArtworks = () => {
             </tr>
           </thead>
           <tbody>
-            {artworks.map((art) => (
-              <tr key={art.id} className="border-b hover:bg-gray-50">
+            {artworks.map((art,index) => (
+              <tr key={index} className="border-b hover:bg-gray-50">
                 <td className="p-3">{art.title}</td>
                 <td className="p-3">${art.price}</td>
                 <td className="p-3 flex gap-3">
@@ -40,7 +34,7 @@ const ManageArtworks = () => {
                     <FaEdit /> Edit
                   </button>
                   <button
-                    onClick={() => handleDelete(art.id)}
+                  
                     className="flex items-center gap-1 text-red-600 hover:text-red-800"
                   >
                     <FaTrash /> Delete
@@ -68,7 +62,7 @@ const ManageArtworks = () => {
                 <FaEdit /> Edit
               </button>
               <button
-                onClick={() => handleDelete(art.id)}
+            
                 className="flex items-center gap-1 text-red-600 hover:text-red-800"
               >
                 <FaTrash /> Delete

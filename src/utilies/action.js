@@ -48,3 +48,31 @@ export const updateOrganization = async (artistMail, organizationData) => {
     throw error;
   }
 };
+
+
+
+export const addArtwork = async (artworkData) => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/artwork`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(artworkData),
+    });
+
+    if (!res.ok) {
+      throw new Error(`Failed to add Artwork: ${res.statusText}`);
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Error adding Artwork:", error);
+    throw error; 
+  }
+};
+
+export const getArtistArtwork=async(artistMail)=>{
+    const res=await fetch(`${process.env.NEXT_PUBLIC_SERVER}/artwork?artistMail=${artistMail}`)
+
+    return res.json()
+}
