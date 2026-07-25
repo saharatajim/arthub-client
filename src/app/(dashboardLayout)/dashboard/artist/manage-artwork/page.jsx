@@ -1,5 +1,4 @@
-
-
+import ActionControls from "@/app/components/dashboard/artist/ActionControls";
 import { getArtistArtwork } from "@/utilies/action";
 import { getUser } from "@/utilies/cors";
 import { FaEdit, FaTrash } from "react-icons/fa";
@@ -8,7 +7,7 @@ const ManageArtworks = async() => {
  
   const user=await getUser()
      const artistMail=user.email
-     const artworks=await getArtistArtwork(artistMail)
+     const artworks=await getArtistArtwork()
 
   return (
     <div className="p-6 flex-1 bg-gray-100 min-h-screen">
@@ -30,15 +29,7 @@ const ManageArtworks = async() => {
                 <td className="p-3">{art.title}</td>
                 <td className="p-3">${art.price}</td>
                 <td className="p-3 flex gap-3">
-                  <button className="flex items-center gap-1 text-blue-600 hover:text-blue-800">
-                    <FaEdit /> Edit
-                  </button>
-                  <button
-                  
-                    className="flex items-center gap-1 text-red-600 hover:text-red-800"
-                  >
-                    <FaTrash /> Delete
-                  </button>
+                  <ActionControls art={art}/>
                 </td>
               </tr>
             ))}
@@ -48,9 +39,9 @@ const ManageArtworks = async() => {
 
       {/* Card layout for small screens */}
       <div className="md:hidden space-y-4">
-        {artworks.map((art) => (
+        {artworks.map((art,index) => (
           <div
-            key={art.id}
+            key={index}
             className="bg-white shadow rounded-lg p-4 flex flex-col gap-2"
           >
             <h3 className="text-lg font-semibold text-purple-700">
@@ -58,15 +49,7 @@ const ManageArtworks = async() => {
             </h3>
             <p className="text-gray-600">Price: ${art.price}</p>
             <div className="flex gap-4 mt-2">
-              <button className="flex items-center gap-1 text-blue-600 hover:text-blue-800">
-                <FaEdit /> Edit
-              </button>
-              <button
-            
-                className="flex items-center gap-1 text-red-600 hover:text-red-800"
-              >
-                <FaTrash /> Delete
-              </button>
+              <ActionControls art={art}/>
             </div>
           </div>
         ))}

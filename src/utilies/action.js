@@ -71,8 +71,31 @@ export const addArtwork = async (artworkData) => {
   }
 };
 
-export const getArtistArtwork=async(artistMail)=>{
-    const res=await fetch(`${process.env.NEXT_PUBLIC_SERVER}/artwork?artistMail=${artistMail}`)
+export const getArtistArtwork=async()=>{
+    const res=await fetch(`${process.env.NEXT_PUBLIC_SERVER}/artwork`)
 
     return res.json()
+}
+export const getArtworkDetails=async(id)=>{
+    const res=await fetch(`${process.env.NEXT_PUBLIC_SERVER}/artwork/${id}`)
+
+    return res.json()
+}
+export const deleteArt=async(id)=>{
+const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/artwork/${id}`, {
+  method: "DELETE" 
+})
+const data = await res.json()
+
+
+}
+export const updateArtwork=async(id,modifiedData)=>{
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/artwork/${id}`, {
+  method: "PATCH",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(modifiedData)
+})
+const data = await res.json()
+
+
 }

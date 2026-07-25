@@ -1,11 +1,13 @@
 import Image from "next/image";
+import Link from "next/link";
 
 
 export default function ArtCard({art}) {
    const {_id,title,price,image,description,createdAt,companyId,category,artistMail}=art
 
   return (
-    <div className="bg-white shadow rounded-lg overflow-hidden hover:shadow-md transition">
+    <Link className="bg-white shadow rounded-lg overflow-hidden hover:shadow-md transition"
+    href={`/browse/${_id}`}>
   
       <div className="w-full h-48 relative">
         <Image
@@ -23,6 +25,6 @@ export default function ArtCard({art}) {
         <p className="text-sm text-gray-500">{category}</p>
         <p className="text-md font-semibold text-green-600">${price}</p>
       </div>
-    </div>
+    </Link>
   );
 }

@@ -1,13 +1,12 @@
 
 import ArtCard from "@/app/components/ArtCard";
 import { getArtistArtwork } from "@/utilies/action";
-import { getUser } from "@/utilies/cors";
+
 
 export default async function BrowseArtworkPage() {
 
-    const user=await getUser()
-    const artistMail=user.email
-    const artworks=await getArtistArtwork(artistMail)
+    
+    const artworks=await getArtistArtwork()
   return (
     <div className="container mx-auto px-4 py-8">
       <h2 className="text-2xl font-bold text-purple-700 mb-6 text-center">

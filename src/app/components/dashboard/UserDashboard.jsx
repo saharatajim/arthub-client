@@ -23,7 +23,7 @@ const UserDashboard = () => {
     { icon: <FaPaintBrush />, label: "Manage Artworks", href: "/dashboard/artist/manage-artwork" },
     { icon: <FaPlusCircle />, label: "Add Artwork", href: "/dashboard/artist/add-artwork" },
     { icon: <FaPlusCircle />, label: "Add Company", href: "/dashboard/artist/add-organization" },
-    { icon: <FaEdit />, label: "Edit Artwork", href: "/dashboard/artist/edit-artwork" },
+  
     { icon: <FaChartLine />, label: "Sales History", href: "/dashboard/artist/sale-history" },
     { icon: <FaUserCog />, label: "Profile Management", href: "/dashboard/artist/profile" },
   ];

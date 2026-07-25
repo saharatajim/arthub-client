@@ -151,13 +151,13 @@ export  function Navbar() {
                 )}
               </div>
             ) : (
-              <Button
-                as={Link}
+              <Link
+               
                 href="/auth/signin"
-                className="bg-purple-600 text-white hover:bg-purple-700"
+                className="bg-purple-600 p-2 text-white hover:bg-purple-700"
               >
                 Login
-              </Button>
+              </Link>
             )}
           </div>
         </header>
