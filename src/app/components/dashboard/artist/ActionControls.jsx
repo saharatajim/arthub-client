@@ -17,7 +17,7 @@ const handleDelete = async () => {
 };
 
   return (
-    <div className="flex gap-4 mt-2">
+    <div className=" space-y-3  m-2">
      <Modal>
       <Button className="bg-white text-blue-600 hover:text-blue-800"><FaTrash /> Edit</Button>
       <Modal.Backdrop>

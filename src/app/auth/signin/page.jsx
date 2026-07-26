@@ -1,9 +1,13 @@
 "use client";
+
 import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 
 export default function SigninPage() {
+  const router = useRouter();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -25,6 +29,7 @@ export default function SigninPage() {
       }
 
       alert("Welcome back!");
+       router.push("/")
     } catch (err) {
     
       alert("Something went wrong during signin.");

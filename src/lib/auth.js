@@ -1,8 +1,12 @@
+const dns = require("node:dns");  
+dns.setServers(["8.8.8.8", "8.8.4.4"]); 
+
 import { betterAuth } from "better-auth";
 import { MongoClient } from "mongodb";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 
 const client = new MongoClient(process.env.MONGODB_URL);
+await client.connect(); // ✅ connect before using
 const db = client.db("arthub");
 
 export const auth = betterAuth({
@@ -25,20 +29,10 @@ export const auth = betterAuth({
       required: true,
       defaultValue: "Buyer"
     },
-    isFree: {
-      type: "boolean",
-      required: false,
-      defaultValue: true
-    },
-    isPro: {
-      type: "boolean",
-      required: false,
-      defaultValue: false
-    },
-    isPremium: {
-      type: "boolean",
-      required: false,
-      defaultValue: false
+    subscriptionPlan: {
+      type: "string",
+       required: true,
+      defaultValue: "Free"
     }
   }
 }

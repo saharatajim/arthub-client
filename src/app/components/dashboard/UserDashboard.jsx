@@ -13,20 +13,44 @@ import {
   FaArrowLeft
 } from "react-icons/fa";
 import { BsLayoutSidebar } from "react-icons/bs";
+import { authClient } from "@/lib/auth-client";
 
 const UserDashboard = () => {
   const pathname = usePathname();   // ✅ current route path
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const { 
+        data: session, 
+        isPending, //loading state
+        error, //error object
+        refetch //refetch the session
+    } = authClient.useSession() 
+  const CurrentRole = session?.user?.role;
 
-  const artistMenu = [
-    { icon: <FaTachometerAlt />, label: "Overview", href: "/dashboard" },
-    { icon: <FaPaintBrush />, label: "Manage Artworks", href: "/dashboard/artist/manage-artwork" },
-    { icon: <FaPlusCircle />, label: "Add Artwork", href: "/dashboard/artist/add-artwork" },
-    { icon: <FaPlusCircle />, label: "Add Company", href: "/dashboard/artist/add-organization" },
-  
-    { icon: <FaChartLine />, label: "Sales History", href: "/dashboard/artist/sale-history" },
-    { icon: <FaUserCog />, label: "Profile Management", href: "/dashboard/artist/profile" },
-  ];
+const userMenu = [
+  { icon: <FaPaintBrush />, label: "Brought Artworks", href: "/dashboard/user/bought-artworks" },
+  { icon: <FaChartLine />, label: "Purchase History", href: "/dashboard/user/purchase-history" },
+  { icon: <FaUserCog />, label: "Profile Management", href: "/dashboard/user/profile" },
+];
+
+const artistMenu = [
+  { icon: <FaTachometerAlt />, label: "Overview", href: "/dashboard/artist" },
+  { icon: <FaPaintBrush />, label: "Manage Artworks", href: "/dashboard/artist/manage-artwork" },
+  { icon: <FaPlusCircle />, label: "Add Artwork", href: "/dashboard/artist/add-artwork" },
+  { icon: <FaPlusCircle />, label: "Add Company", href: "/dashboard/artist/add-organization" },
+  { icon: <FaChartLine />, label: "Sales History", href: "/dashboard/artist/sale-history" },
+  { icon: <FaUserCog />, label: "Profile Management", href: "/dashboard/artist/profile" },
+];
+
+const adminMenu = [
+  { icon: <FaTachometerAlt />, label: "Admin Dashboard", href: "/dashboard/admin" },
+  { icon: <FaPaintBrush />, label: "All Artworks", href: "/dashboard/admin/artworks" },
+  { icon: <FaChartLine />, label: "Reports", href: "/dashboard/admin/reports" },
+  { icon: <FaUserCog />, label: "User Management", href: "/dashboard/admin/users" },
+];
+
+// Pick menu dynamically
+let menuItems = CurrentRole === "Buyer" ? userMenu : artistMenu;
+
 
   return (
     <div className=" ">
@@ -39,7 +63,8 @@ const UserDashboard = () => {
         <div className="flex justify-between  border-b border-gray-200">
           <div className="p-6">
           <h1 className="text-2xl font-bold text-purple-700">ArtHub</h1>
-          <p className="text-sm text-gray-500 mt-1">Welcome,</p>
+          <p className="text-sm text-gray-500 mt-1">Welcome,{session?.user?.name}</p>
+          <p className="text-sm text-gray-500 mt-1">{session?.user?.role}</p>
         </div>
          <button
         className="md:hidden m-2.5 bg-pink-600 text-white p-2 rounded-md"
@@ -52,7 +77,7 @@ const UserDashboard = () => {
 
         <nav className="p-4 space-y-3 flex flex-col h-full justify-between">
           <div className="space-y-3">
-            {artistMenu.map((item, index) => (
+            {menuItems.map((item, index) => (
               <Link
                 key={index}
                 href={item.href}

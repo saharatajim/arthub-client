@@ -1,5 +1,7 @@
 "use client";
-import { addArtwork } from "@/utilies/action";
+
+
+import { addArtworkToDb } from "@/utilies/action";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -7,6 +9,7 @@ export default function AddArtworkPage({ArtistEmail,company}) {
   const [preview, setPreview] = useState(null);
   const [artworks, setArtworks] = useState([]);
 
+  
   // Image preview
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -18,8 +21,11 @@ export default function AddArtworkPage({ArtistEmail,company}) {
 const userCompany = company.find(c => c.artistMail === ArtistEmail);
 
 // Form submit
+
+const [loading, setLoading] = useState(false);
 const handleSubmit = async (e) => {
   e.preventDefault();
+   setLoading(true); // ✅ start loading
   const formData = new FormData(e.target);
   const entries = Object.fromEntries(formData.entries());
   const imageFile = formData.get("image");
@@ -48,7 +54,7 @@ const handleSubmit = async (e) => {
     return;
   }
 
- const newArtwork = {
+const newArtwork = {
   title: entries.title,
   description: entries.description,
   price: entries.price,
@@ -56,27 +62,30 @@ const handleSubmit = async (e) => {
   image: imageUrl,
   artistMail: ArtistEmail,
   companyId: userCompany._id,
-  createdAt: new Date().toISOString() 
+  quantity: entries.quantity, 
+  createdAt: new Date().toISOString()
 };
 
 
-  try {
-    const resData = await addArtwork(newArtwork);
 
-    if (resData.insertedId) {
-      setArtworks([...artworks,newArtwork]);
-      alert("Artwork added successfully!");
-    } else {
-      alert("Failed to add artwork!");
-    }
-  } catch (err) {
-    console.error("Error adding artwork:", err);
-    alert("Something went wrong while adding artwork.");
+ try {
+  const resData = await addArtworkToDb(newArtwork);
+  console.log("Backend response:", resData);
+
+  if (resData.insertedId) {
+    alert("Artwork added successfully!");
   }
-
+} catch (err) {
+  console.error("Error adding artwork:", err);
+  alert("Something went wrong while adding artwork.");
+} finally {
+  setLoading(false); // ✅ stop loading
   e.target.reset();
   setPreview(null);
+}
+
 };
+
 
 
 
@@ -110,33 +119,45 @@ const handleSubmit = async (e) => {
             />
           </div>
 
-          {/* Price & Category (side by side on larger screens) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium">Price</label>
-              <input
-                type="number"
-                name="price"
-                placeholder="Enter price"
-                className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-purple-600"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium">Category</label>
-              <select
-                name="category"
-                className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-purple-600"
-                required
-              >
-                <option value="">Select category</option>
-                <option value="Painting">Painting</option>
-                <option value="Digital">Digital</option>
-                <option value="Photography">Photography</option>
-                <option value="Sculpture">Sculpture</option>
-              </select>
-            </div>
-          </div>
+        
+          {/* Price, Category & Quantity (side by side on larger screens) */}
+<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+  <div>
+    <label className="block text-sm font-medium">Price</label>
+    <input
+      type="number"
+      name="price"
+      placeholder="Enter price"
+      className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-purple-600"
+      required
+    />
+  </div>
+  <div>
+    <label className="block text-sm font-medium">Category</label>
+    <select
+      name="category"
+      className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-purple-600"
+      required
+    >
+      <option value="">Select category</option>
+      <option value="Painting">Painting</option>
+      <option value="Digital">Digital</option>
+      <option value="Photography">Photography</option>
+      <option value="Sculpture">Sculpture</option>
+    </select>
+  </div>
+  <div>
+    <label className="block text-sm font-medium">Quantity</label>
+    <input
+      type="number"
+      name="quantity"
+      placeholder="Enter quantity"
+      className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-purple-600"
+      required
+    />
+  </div>
+</div>
+
 
           {/* Image Upload */}
           <div>
@@ -172,6 +193,11 @@ const handleSubmit = async (e) => {
           >
             Add Artwork
           </button>
+           {loading && (
+    <p className="text-purple-600 mt-2 text-center">
+      Uploading artwork, please wait...
+    </p>
+  )}
         </form>
       </div>
     </div>

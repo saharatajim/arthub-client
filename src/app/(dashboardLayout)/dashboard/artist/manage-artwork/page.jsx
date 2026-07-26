@@ -1,13 +1,14 @@
 import ActionControls from "@/app/components/dashboard/artist/ActionControls";
 import { getArtistArtwork } from "@/utilies/action";
 import { getUser } from "@/utilies/cors";
+import Image from "next/image";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
 const ManageArtworks = async() => {
  
   const user=await getUser()
      const artistMail=user.email
-     const artworks=await getArtistArtwork()
+     const artworks=await getArtistArtwork(artistMail)
 
   return (
     <div className="p-6 flex-1 bg-gray-100 min-h-screen">
@@ -18,20 +19,38 @@ const ManageArtworks = async() => {
         <table className="w-full border-collapse">
           <thead className="bg-purple-100">
             <tr>
-              <th className="text-left p-3">Title</th>
-              <th className="text-left p-3">Price</th>
-              <th className="text-left p-3">Actions</th>
+             <th className="text-left p-3">Image</th>
+      <th className="text-left p-3">Title</th>
+      <th className="text-left p-3">Price</th>
+      <th className="text-left p-3">Quantity</th>
+      <th className="text-left p-3">Actions</th>
             </tr>
           </thead>
           <tbody>
             {artworks.map((art,index) => (
-              <tr key={index} className="border-b hover:bg-gray-50">
-                <td className="p-3">{art.title}</td>
-                <td className="p-3">${art.price}</td>
-                <td className="p-3 flex gap-3">
-                  <ActionControls art={art}/>
-                </td>
-              </tr>
+             <tr key={index}  className="border-b hover:bg-gray-50">
+        <td className="p-3">
+          {art.image ? (
+            <Image
+              src={art.image}
+              alt={art.title}
+              width={60}
+              height={30}
+              className="object-cover rounded"
+            />
+          ) : (
+            <div className="w-16 h-16 bg-gray-200 flex items-center justify-center text-gray-500 rounded">
+              No Image
+            </div>
+          )}
+        </td>
+        <td className="p-3">{art.title}</td>
+        <td className="p-3">${art.price}</td>
+        <td className="p-3">{art.quantity}</td>
+        <td className="p-3 flex gap-3">
+          <ActionControls art={art} />
+        </td>
+      </tr>
             ))}
           </tbody>
         </table>

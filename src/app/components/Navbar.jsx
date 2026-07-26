@@ -15,6 +15,7 @@ export  function Navbar() {
    const { 
         data: session, 
     } = authClient.useSession() 
+const currentRole=session?.user?.role
 
   const pathname = usePathname();
   useEffect(() => {
@@ -134,10 +135,16 @@ export  function Navbar() {
                     >
                       My Profile
                     </Link>
-                    <Link
-                      href="/dashboard"
-                      className="block px-4 py-2 hover:bg-gray-100"
-                    >
+                   <Link
+  href={
+    currentRole === "Artist"
+      ? "/dashboard/artist"
+      : currentRole === "Buyer"
+      ? "/dashboard/user"
+      : "/"
+  }
+  className="block px-4 py-2 hover:bg-gray-100"
+>
                       My Dashboard
                     </Link>
                     <button
@@ -190,7 +197,13 @@ export  function Navbar() {
                       My Profile
                     </Link>
                     <Link
-                      href="/dashboard"
+                     href={
+    currentRole === "Artist"
+      ? "/dashboard/artist"
+      : currentRole === "Buyer"
+      ? "/dashboard/user"
+      : "/"
+  }
                       className="block py-2 hover:text-purple-600"
                     >
                       My Dashboard
