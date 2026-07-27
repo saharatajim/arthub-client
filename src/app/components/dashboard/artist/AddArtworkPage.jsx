@@ -57,12 +57,12 @@ const handleSubmit = async (e) => {
 const newArtwork = {
   title: entries.title,
   description: entries.description,
-  price: entries.price,
+ price: parseInt(entries.price), 
   category: entries.category,
   image: imageUrl,
   artistMail: ArtistEmail,
   companyId: userCompany._id,
-  quantity: entries.quantity, 
+  quantity: parseInt(entries.quantity), 
   createdAt: new Date().toISOString()
 };
 

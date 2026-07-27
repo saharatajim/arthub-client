@@ -1,29 +1,9 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+
 
 export default function ArtDetails({ artwork, artId,userMail }) {
-    // console.log(artwork,artId);
-  const [buyQuantity, setBuyQuantity] = useState(1);
 
-//   const handleBuyNow =async () => {
-    
-  
-//  const purchaseData = {
-//       productId: artId,
-//       title: artwork.title,
-//       price: artwork.price,
-//       quantity: buyQuantity,
-//       totalPrice: artwork.price * buyQuantity,
-//       sellerMail: artwork.artistMail,
-//       buyerMail: userMail,
-//       createdAt: new Date().toISOString(),
-//     };
-//   console.log("Purchase Object:", purchaseData);
-
-    
-   
-//   };
 
   return (
     <div className="container mx-auto px-4 py-10">
@@ -48,22 +28,10 @@ export default function ArtDetails({ artwork, artId,userMail }) {
             <p className="text-gray-600 mb-4">Available: {artwork.quantity}</p>
             <p className="text-lg font-semibold text-green-600 mb-2">${artwork.price}</p>
 
-            {/* Quantity Selector */}
-            <div className="mb-4">
-              <label className="block text-sm font-medium">Quantity</label>
-              <input
-                type="number"
-                min="1"
-                max={artwork.quantity}
-                value={buyQuantity}
-                onChange={(e) => setBuyQuantity(Number(e.target.value))}
-                className="w-24 border rounded px-2 py-1"
-              />
-            </div>
+           
+           
           </div>
-<p className="text-xl font-bold text-purple-700 mb-4">
-  Total: ${artwork.price * buyQuantity}
-</p>
+
           {/* Action Buttons */}
           <div className="flex flex-col gap-3">
            
@@ -80,8 +48,7 @@ export default function ArtDetails({ artwork, artId,userMail }) {
   <input className="hidden" readOnly name="productId" value={artId} />
   <input className="hidden" readOnly name="title" value={artwork.title} />
   <input className="hidden" readOnly name="price" value={artwork.price} />
-  <input className="hidden" readOnly name="quantity" value={buyQuantity}/>
-  <input className="hidden" readOnly name="totalPrice" value={artwork.price * buyQuantity} />
+
   <input className="hidden" readOnly name="sellerMail" value={artwork.artistMail} />
 </form>
 

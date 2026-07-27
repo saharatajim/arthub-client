@@ -12,12 +12,12 @@ export async function POST(request) {
     const formData=await request.formData()
 
     const user=getUser()
-
+       const buyerMail=user?.email
      const productId = formData.get("productId");
      const title = formData.get("title");
      const price = formData.get("price");
-     const quantity = formData.get("quantity");
-     const totalPrice = formData.get("totalPrice");
+    
+
      const sellerMail = formData.get("sellerMail");
 
     // Create Checkout Sessions from body params.
@@ -36,9 +36,12 @@ export async function POST(request) {
         },
       ],
          metadata : {
-       sellerMail,
-       totalPrice,
-       quantity,price,title,productId
+           sellerMail,
+           buyerMail,
+            price,
+           title,
+            productId, 
+            createdAt: new Date().toISOString(),
     
       },
       mode: 'payment',
