@@ -100,3 +100,19 @@ export const addArtworkToDb = async (artworkData) => {
     throw error; 
   }
 };
+
+
+
+export const getBuyerPurchases = async (buyerMail) => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/purchases?buyerMail=${buyerMail}`);
+  return res.json();
+};
+
+export const getSellerPurchases = async (sellerMail) => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/purchases?sellerMail=${sellerMail}`);
+  return res.json();
+};
+export const getPurchases = async () => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/purchases`);
+  return res.json();
+};

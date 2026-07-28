@@ -1,11 +1,18 @@
 import React from 'react';
+import BoughtArtworksGalleryDemo from './BoughtArtworksGalleryDemo';
+import { getUser } from '@/utilies/cors';
+import { getBuyerPurchases } from '@/utilies/action';
 
-const BoughtArtworks = () => {
+const BroughtArt = async() => {
+        const user=await getUser()
+        const getPurchase=await getBuyerPurchases(user?.email)
+        
+    
     return (
         <div>
-            bought-artworks
+            <BoughtArtworksGalleryDemo getPurchase={getPurchase}/>
         </div>
     );
 };
 
-export default BoughtArtworks;
+export default BroughtArt;

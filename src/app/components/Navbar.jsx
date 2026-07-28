@@ -129,12 +129,7 @@ const currentRole=session?.user?.role
                 </Avatar>
                 {isDropdownOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg">
-                    <Link
-                      href="/profile"
-                      className="block px-4 py-2 hover:bg-gray-100"
-                    >
-                      My Profile
-                    </Link>
+                 
                    <Link
   href={
     currentRole === "Artist"

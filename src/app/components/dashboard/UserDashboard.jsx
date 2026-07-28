@@ -94,12 +94,12 @@ let menuItems = CurrentRole === "Buyer" ? userMenu : artistMenu;
 
           {/* Bottom buttons */}
           <div className="border-t border-gray-200 space-y-2 p-4">
-            <button className="w-full flex items-center gap-3 p-2 rounded-md hover:bg-gray-100 text-pink-600 font-medium">
-              <FaSignOutAlt /> Logout
-            </button>
-            <button className="w-full flex items-center gap-3 p-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium">
+           <Link href={"/"}>
+           <button className="w-full flex items-center gap-3 p-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium">
               <FaArrowLeft /> Go Back
             </button>
+           </Link>
+            
            
           </div>
         </nav>

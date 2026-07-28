@@ -18,6 +18,7 @@ const customerEmail = session.customer_details?.email;
 const paymentData = {
   trxId:session?.payment_intent?.id,
   price: session?.metadata?.price,
+  image: session?.metadata?.image,
   productId: session?.metadata?.productId,
   title: session?.metadata?.title,
   sellerMail: session?.metadata?.sellerMail,

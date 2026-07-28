@@ -48,8 +48,8 @@ export default function ArtDetails({ artwork, artId,userMail }) {
   <input className="hidden" readOnly name="productId" value={artId} />
   <input className="hidden" readOnly name="title" value={artwork.title} />
   <input className="hidden" readOnly name="price" value={artwork.price} />
-
   <input className="hidden" readOnly name="sellerMail" value={artwork.artistMail} />
+  <input className="hidden" readOnly name="image" value={artwork.image} />
 </form>
 
            

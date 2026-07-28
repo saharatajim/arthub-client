@@ -16,6 +16,7 @@ export async function POST(request) {
      const productId = formData.get("productId");
      const title = formData.get("title");
      const price = formData.get("price");
+     const image = formData.get("image");
     
 
      const sellerMail = formData.get("sellerMail");
@@ -39,6 +40,7 @@ export async function POST(request) {
            sellerMail,
            buyerMail,
             price,
+            image,
            title,
             productId, 
             createdAt: new Date().toISOString(),
