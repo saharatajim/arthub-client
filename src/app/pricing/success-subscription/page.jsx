@@ -1,9 +1,20 @@
+import { auth } from '@/lib/auth'
 import { stripe } from '@/lib/stripe'
+import { premiumSub } from '@/utilies/action'
+
+import { headers } from 'next/headers'
+
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
 export default async function Success({ searchParams }) {
   const { session_id } = await searchParams
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  const user = session?.user;
+console.log(user);
 
   if (!session_id)
     throw new Error('Please provide a valid session_id (`cs_test_...`)')
@@ -20,6 +31,10 @@ export default async function Success({ searchParams }) {
   }
 
   if (status === 'complete') {
+
+   const result= await premiumSub({user,session_id})
+   
+   console.log(result);
     return (
       <section
         id="success"
