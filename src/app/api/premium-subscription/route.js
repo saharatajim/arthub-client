@@ -7,9 +7,9 @@ export async function POST() {
   try {
     const headersList = await headers()
     const origin = headersList.get('origin')
-    
-    const priceId="price_1TyD5eF75pQIIo7L4Mkzwubi"
 
+    const priceId="price_1TyD5eF75pQIIo7L4Mkzwubi"
+   
   
     const session = await stripe.checkout.sessions.create({
       line_items: [
@@ -19,6 +19,7 @@ export async function POST() {
           quantity: 1,
         },
       ],
+     
       mode: 'subscription',
       success_url: `${origin}/pricing/success-subscription?session_id={CHECKOUT_SESSION_ID}`,
    

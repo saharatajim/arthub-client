@@ -9,31 +9,43 @@ import { redirect } from 'next/navigation'
 
 export default async function Success({ searchParams }) {
   const { session_id } = await searchParams
-  const session = await auth.api.getSession({
+
+  const userSession = await auth.api.getSession({
     headers: await headers(),
   });
 
-  const user = session?.user;
-console.log(user);
+  const user = userSession?.user;
+
 
   if (!session_id)
     throw new Error('Please provide a valid session_id (`cs_test_...`)')
 
-  const {
-    status,
-    customer_details: { email: customerEmail }
-  } = await stripe.checkout.sessions.retrieve(session_id, {
-    expand: ['line_items', 'payment_intent']
-  })
+  const session = await stripe.checkout.sessions.retrieve(session_id, {
+  expand: ['line_items', 'payment_intent']
+});
+const { status } = session;
 
+const customerEmail = session.customer_details?.email;
+const subData = {
+       session_id,
+       user,
+       customerEmail,
+       customerName:session.customer_details?.name,
+       price: session.amount_total/100,
+       title: "Premium",
+       createdAt: new Date().toISOString(),
+
+};
+console.log(session
+);
   if (status === 'open') {
     return redirect('/')
   }
 
   if (status === 'complete') {
 
-   const result= await premiumSub({user,session_id})
-   
+   const result= await premiumSub(subData)
+
    console.log(result);
     return (
       <section
