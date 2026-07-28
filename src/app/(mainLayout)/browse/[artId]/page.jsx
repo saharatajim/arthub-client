@@ -1,5 +1,5 @@
 import ArtDetails from '@/app/components/dashboard/artist/ArtDetails';
-import { getArtworkDetails } from '@/utilies/action';
+import { getArtworkDetails, getBuyerPurchases } from '@/utilies/action';
 import { getUser } from '@/utilies/cors';
 
 import React from 'react';
@@ -8,14 +8,17 @@ const ArtDetailsPage = async({params}) => {
     const {artId}=await params
     const artwork=await getArtworkDetails(artId)
     const user=await getUser()
+    const role=user?.role
     const userMail=user?.email
-
-    console.log(userMail);
+    const subPlan=user?.subscriptionPlan 
+    const buyerPurchase=await getBuyerPurchases(userMail)
+     const buyerTotalPurchased=buyerPurchase?.length
+    console.log(role);
 
 
     return (
           <div>
-     <ArtDetails artwork={artwork} artId={artId} userMail={userMail}/>
+     <ArtDetails role={role} buyerTotalPurchased={buyerTotalPurchased} artwork={artwork} artId={artId} subPlan={subPlan} />
     </div>
     );
 };

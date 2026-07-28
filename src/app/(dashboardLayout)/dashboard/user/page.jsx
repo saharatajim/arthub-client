@@ -1,5 +1,6 @@
 import { getUser } from "@/utilies/cors";
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function MyProfile() {
 
@@ -50,10 +51,12 @@ const profile=await getUser()
 
     {/* Actions */}
     <div className="mt-6 flex justify-center gap-4">
-    
-      <button className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">
+    <Link href={"/subscription-plan"}>
+    <button className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">
         Upgrade Plan
       </button>
+    </Link>
+      
     </div>
   </div>
 </div>

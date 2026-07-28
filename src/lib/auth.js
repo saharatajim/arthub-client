@@ -6,7 +6,7 @@ import { MongoClient } from "mongodb";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 
 const client = new MongoClient(process.env.MONGODB_URL);
-await client.connect(); // ✅ connect before using
+// await client.connect(); // ✅ connect before using
 const db = client.db("arthub");
 
 export const auth = betterAuth({

@@ -6,7 +6,7 @@ export default function ArtCard({art}) {
    const {_id,title,price,image,description,createdAt,companyId,category,artistMail}=art
 
   return (
-    <Link className="bg-white shadow rounded-lg overflow-hidden hover:shadow-md transition"
+    <Link className="bg-white shadow rounded-lg overflow-hidden hover:shadow-md   hover:scale-105 transition-transform "
     href={`/browse/${_id}`}>
   
       <div className="w-full h-48 relative">

@@ -6,7 +6,7 @@ export default function BoughtArtworksGalleryDemo({getPurchase}) {
   const artworks =getPurchase
 
   return (
-    <section className="w-full px-6 py-10 bg-gray-50 font-sans">
+    <section className="w-full px-6 py-10  font-sans">
       <h2 className="text-2xl font-semibold text-gray-800 mb-6">
         🎨 Bought Artworks
       </h2>
