@@ -10,7 +10,7 @@ export default function PremiumPlan() {
         MOST POPULAR
       </span>
       <h3 className="text-xl font-semibold mb-2 text-center">{plan.type}</h3>
-      <p className="text-3xl font-bold mb-2 text-center">{plan.price}</p>
+      <p className="text-3xl font-bold mb-2 text-center">${plan.price}</p>
       <p className="text-gray-600 mb-6 text-center">Unlimited</p>
       <form method="POST" action={'/api/premium-subscription'}>
         <button

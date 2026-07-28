@@ -118,7 +118,7 @@ export const getPurchases = async () => {
 };
 
 export const premiumSub=async(subdata)=>{
-  //  try {
+
     const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/pre-sub`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -127,15 +127,19 @@ export const premiumSub=async(subdata)=>{
      const result = await res.json();
      return result
 
-  //   if (!res.ok) {
-  //     throw new Error(`Failed to add subscription data: ${res.statusText}`);
-  //   }
+ 
 
-  //   const result = await res.json();
-  //   return result;
-  // } catch (error) {
-  //   console.error("Error adding subscription data:", error);
-  //   throw error; 
-  // }
+}
+export const ProSub=async(subdata)=>{
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/pro-sub`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(subdata),
+    });
+     const result = await res.json();
+     return result
+
+ 
 
 }

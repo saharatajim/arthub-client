@@ -8,7 +8,7 @@ export async function POST() {
     const headersList = await headers()
     const origin = headersList.get('origin')
 
-    const priceId="price_1TyD5eF75pQIIo7L4Mkzwubi"
+    const priceId="price_1TyK72F75pQIIo7LAeTBPWep"
    
   
     const session = await stripe.checkout.sessions.create({
@@ -21,7 +21,7 @@ export async function POST() {
       ],
      
       mode: 'subscription',
-      success_url: `${origin}/pricing/success-subscription?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${origin}/pricing/success-pro-subscription?session_id={CHECKOUT_SESSION_ID}`,
    
     });
     return NextResponse.redirect(session.url, 303)
