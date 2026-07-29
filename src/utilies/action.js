@@ -143,3 +143,31 @@ export const ProSub=async(subdata)=>{
  
 
 }
+
+// Get all Premium subscriptions
+export const getPremiumSubs = async () => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/pre-sub`, {
+    method: "GET",
+    cache: "no-store", // fresh data always
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch Premium subscriptions");
+  }
+
+  return res.json();
+};
+
+// Get all Pro subscriptions
+export const getProSubs = async () => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/pro-sub`, {
+    method: "GET",
+    cache: "no-store",
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch Pro subscriptions");
+  }
+
+  return res.json();
+};

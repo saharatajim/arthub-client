@@ -27,6 +27,7 @@ const { status } = session;
 
 const customerEmail = session.customer_details?.email;
 const subData = {
+     trxId:session?.subscription,
        session_id,
        user,
        customerEmail,
@@ -36,8 +37,7 @@ const subData = {
        createdAt: new Date().toISOString(),
 
 };
-console.log(session
-);
+
   if (status === 'open') {
     return redirect('/')
   }
@@ -46,7 +46,9 @@ console.log(session
 
    const result= await premiumSub(subData)
 
-   console.log(result);
+   console.log(result)
+   console.log("ses",session
+);
     return (
       <section
         id="success"
