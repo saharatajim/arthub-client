@@ -43,13 +43,13 @@ const artistMenu = [
 
 const adminMenu = [
   { icon: <FaTachometerAlt />, label: "Admin Dashboard", href: "/dashboard/admin" },
-  { icon: <FaPaintBrush />, label: "All Artworks", href: "/dashboard/admin/artworks" },
+  { icon: <FaPaintBrush />, label: "All Artworks", href: "/dashboard/admin/allArt" },
   { icon: <FaChartLine />, label: "Reports", href: "/dashboard/admin/reports" },
   { icon: <FaUserCog />, label: "User Management", href: "/dashboard/admin/users" },
 ];
 
 // Pick menu dynamically
-let menuItems = CurrentRole === "Buyer" ? userMenu : artistMenu;
+let menuItems = CurrentRole === "Buyer" ? userMenu :CurrentRole === "Buyer"? artistMenu:adminMenu
 
 
   return (
