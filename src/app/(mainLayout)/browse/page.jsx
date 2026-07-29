@@ -133,11 +133,33 @@ export default function BrowseArtworkPage() {
       </div>
 
       {/* Render Filtered Artworks */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {filteredArtworks.map((art, index) => (
-          <ArtCard key={index} art={art} />
-        ))}
-      </div>
+      {/* Render Filtered Artworks or Empty State */}
+{filteredArtworks.length === 0 ? (
+  <div className="flex flex-col items-center justify-center bg-gray-50 border border-gray-200 rounded-lg shadow-md p-10">
+    <svg
+      className="w-16 h-16 text-purple-400 mb-4"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+    >
+      <path d="M12 4v16m8-8H4" />
+    </svg>
+    <h2 className="text-xl font-semibold text-purple-600">
+      No Artworks Found
+    </h2>
+    <p className="text-gray-600 mt-2">
+      There are no artworks available right now.
+    </p>
+  </div>
+) : (
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    {filteredArtworks.map((art, index) => (
+      <ArtCard key={index} art={art} />
+    ))}
+  </div>
+)}
+
     </div>
   );
 }
