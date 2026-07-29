@@ -47,7 +47,7 @@ const adminMenu = [
 ];
 
 // Pick menu dynamically
-let menuItems = CurrentRole === "Buyer" ? userMenu :CurrentRole === "Admin"? artistMenu:adminMenu
+let menuItems = CurrentRole === "Buyer" ? userMenu :CurrentRole === "Artist"? artistMenu:adminMenu
 
 
   return (
