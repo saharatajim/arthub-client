@@ -52,8 +52,45 @@ export const updateOrganization = async (artistMail, organizationData) => {
 
 
 
-export const getArtistArtwork=async()=>{
-    const res=await fetch(`${process.env.NEXT_PUBLIC_SERVER}/artwork`)
+// export const getArtistArtwork=async()=>{
+//     const res=await fetch(`${process.env.NEXT_PUBLIC_SERVER}/artwork`)
+
+//     return res.json()
+// }
+
+export const getArtistArtwork = async (
+  search = "",
+  category = "",
+  minPrice = "",
+  maxPrice = "",
+  sort = "newest",
+  artistMail = "",
+  companyId = ""
+) => {
+  const params = new URLSearchParams();
+
+  if (search) params.append("search", search);
+  if (category) params.append("category", category);
+  if (minPrice) params.append("minPrice", minPrice);
+  if (maxPrice) params.append("maxPrice", maxPrice);
+  if (sort) params.append("sort", sort);
+  if (artistMail) params.append("artistMail", artistMail);
+  if (companyId) params.append("companyId", companyId);
+
+  const queryString = params.toString();
+
+  const url = `${process.env.NEXT_PUBLIC_SERVER}/artwork${
+    queryString ? `?${queryString}` : ""
+  }`;
+
+  const res = await fetch(url);
+  const artworks = await res.json();
+
+  return artworks;
+};
+
+export const getOnlyArtistArtwork=async(artistMail)=>{
+    const res=await fetch(`${process.env.NEXT_PUBLIC_SERVER}/artwork?artistMail=${artistMail}`)
 
     return res.json()
 }

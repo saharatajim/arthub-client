@@ -3,7 +3,7 @@ import Link from "next/link";
 
 
 export default function ArtCard({art}) {
-   const {_id,title,price,image,description,createdAt,companyId,category,artistMail}=art
+   const {_id,title,price,image,category}=art
 
   return (
     <Link className="bg-white shadow rounded-lg overflow-hidden hover:shadow-md   hover:scale-105 transition-transform "
