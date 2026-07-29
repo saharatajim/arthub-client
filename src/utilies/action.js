@@ -171,3 +171,24 @@ export const getProSubs = async () => {
 
   return res.json();
 };
+export const getUsersData=async()=>{
+    const res=await fetch(`${process.env.NEXT_PUBLIC_SERVER}/users`)
+
+    return res.json()
+}
+
+export async function updateUserRole(userId, role) {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/users/${userId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ role }),
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to update role");
+  }
+
+  return res.json();
+}
