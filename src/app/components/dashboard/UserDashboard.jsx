@@ -20,9 +20,7 @@ const UserDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const { 
         data: session, 
-        isPending, //loading state
-        error, //error object
-        refetch //refetch the session
+       
     } = authClient.useSession() 
   const CurrentRole = session?.user?.role;
 
@@ -49,7 +47,7 @@ const adminMenu = [
 ];
 
 // Pick menu dynamically
-let menuItems = CurrentRole === "Buyer" ? userMenu :CurrentRole === "Buyer"? artistMenu:adminMenu
+let menuItems = CurrentRole === "Buyer" ? userMenu :CurrentRole === "Admin"? artistMenu:adminMenu
 
 
   return (
