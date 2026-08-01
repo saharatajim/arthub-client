@@ -185,22 +185,17 @@ const currentRole=session?.user?.role
               <li>
                 {isLoggedIn ? (
                   <div className="flex flex-col gap-2">
+                   
                     <Link
-                      href="/profile"
-                      className="block py-2 hover:text-purple-600"
-                    >
-                      My Profile
-                    </Link>
-                    <Link
-                     href={
+  href={
     currentRole === "Artist"
       ? "/dashboard/artist"
       : currentRole === "Buyer"
       ? "/dashboard/user"
-      : "/"
+      : "/dashboard/admin"
   }
-                      className="block py-2 hover:text-purple-600"
-                    >
+  className="block px-4 py-2 hover:bg-gray-100"
+>
                       My Dashboard
                     </Link>
                     <button

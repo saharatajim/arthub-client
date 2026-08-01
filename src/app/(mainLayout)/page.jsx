@@ -3,6 +3,7 @@ import Slider from '../components/Slider';
 
 import TopArtists from '../components/TopArtist';
 import HomePageCate from '../components/HomePageCate';
+import FeaturedArts from '../components/FeaturedArts';
 
 
 const HomePage
@@ -10,6 +11,7 @@ const HomePage
     return (
         <div>
         <Slider/>
+        <FeaturedArts/>
         <div className='grid md:grid-cols-2 items-center gap-15 my-5 container mx-auto'> 
          <HomePageCate/>
         <TopArtists/>

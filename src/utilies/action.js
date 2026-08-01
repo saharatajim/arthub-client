@@ -45,6 +45,13 @@ export const updateOrganization = async (artistMail, organizationData) => {
 
 
 // ✅ Artwork
+export const getLetestArts = async () => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/latest-artworks`, {
+    cache: "no-store"
+  });
+  return res.json();
+};
+
 export const getArtistArtwork = async (
   search = "", category = "", minPrice = "", maxPrice = "", sort = "newest", artistMail = "", companyId = ""
 ) => {
@@ -244,6 +251,15 @@ export async function getSalesChartData() {
 }
 export async function getCategoryChartData() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/analytics/artworks-by-category`, {
+   
+    cache: "no-store"
+  });
+
+  if (!res.ok) throw new Error("Failed to fetch category chart data");
+  return res.json();
+}
+export async function getTopArtist() {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/analytics/top-artists`, {
    
     cache: "no-store"
   });
