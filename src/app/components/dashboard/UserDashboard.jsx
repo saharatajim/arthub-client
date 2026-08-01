@@ -43,6 +43,7 @@ const adminMenu = [
   { icon: <FaTachometerAlt />, label: "Admin Dashboard", href: "/dashboard/admin" },
   { icon: <FaPaintBrush />, label: "All Artworks", href: "/dashboard/admin/allArt" },
   { icon: <FaChartLine />, label: "Transactions", href: "/dashboard/admin/transactions" },
+  { icon: <FaChartLine />, label: "Reports", href: "/dashboard/admin/reports" },
   { icon: <FaUserCog />, label: "User Management", href: "/dashboard/admin/users" },
 ];
 

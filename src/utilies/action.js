@@ -216,3 +216,38 @@ export async function updateUserRole(userId, role) {
   if (!res.ok) throw new Error("Failed to update role");
   return res.json();
 }
+
+
+
+export async function getOverview() {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/analytics/overview`, {
+    cache: "no-store"
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch overview data");
+  }
+
+  return res.json();
+}
+
+export async function getSalesChartData() {
+ const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/analytics/sales-chart`, {
+    cache: "no-store"
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch overview data");
+  }
+
+  return res.json();
+}
+export async function getCategoryChartData() {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/analytics/artworks-by-category`, {
+   
+    cache: "no-store"
+  });
+
+  if (!res.ok) throw new Error("Failed to fetch category chart data");
+  return res.json();
+}

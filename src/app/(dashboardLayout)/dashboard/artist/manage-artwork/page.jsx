@@ -2,7 +2,7 @@ import ActionControls from "@/app/components/dashboard/artist/ActionControls";
 import { getArtistArtwork } from "@/utilies/action";
 import { getUser } from "@/utilies/cors";
 import Image from "next/image";
-import { FaEdit, FaTrash } from "react-icons/fa";
+
 
 const ManageArtworks = async() => {
  
