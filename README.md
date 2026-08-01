@@ -1,36 +1,27 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🎨 ArtHub – Online Art Marketplace
 
-## Getting Started
+ArtHub is a full-stack MERN marketplace connecting art collectors with artists. Users can explore and buy original artworks via Stripe, while artists manage their listings and admins oversee platform activity.
 
-First, run the development server:
+## 🔗 Deployed Links
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Live App:** https://arthub-client-nine.vercel.app/
+- **Client Repo:** https://github.com/saharatajim/arthub-client
+- **Server Repo:** https://github.com/saharatajim/arthub-server
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 🚀 Key Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Auth & Access:** JWT authentication with Email/Password & Google OAuth, featuring role-based dashboards (User, Artist, Admin).
+- **Marketplace:** Responsive grid, search, category filters, sorting, and pagination.
+- **Stripe Payments:** Dynamic purchase system with buyer subscription tiers (Free, Pro, Premium).
+- **Artwork Management:** Full CRUD for artists, image uploads via imgBB API, interactive comments, and a wishlist system.
+- **Admin Dashboard:** User role updates, item management, and platform analytics with interactive charts.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🛠️ Tech Stack & Packages
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Frontend:** Next.js , Tailwind CSS, Stripe JS
+- **Backend:** Node.js, Express.js, MongoDB , JWT, Stripe Node API
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
