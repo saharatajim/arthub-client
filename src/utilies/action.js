@@ -67,6 +67,43 @@ export const getOnlyArtistArtwork = async (artistMail) => {
   return res.json();
 };
 
+//for public
+export const getArtistArtworkPublic = async (
+  search = "",
+  category = "",
+  minPrice = "",
+  maxPrice = "",
+  sort = "newest",
+  limit = 6,
+  page = 1
+) => {
+  const params = new URLSearchParams();
+
+  if (search) params.append("search", search);
+  if (category) params.append("category", category);
+  if (minPrice) params.append("minPrice", minPrice);
+  if (maxPrice) params.append("maxPrice", maxPrice);
+  if (sort) params.append("sort", sort);
+
+  // Pagination params
+  params.append("limit", limit);
+  params.append("page", page);
+
+  const url = `${process.env.NEXT_PUBLIC_SERVER}/artwork/public${params.toString() ? `?${params.toString()}` : ""}`;
+  
+  try {
+    const res = await fetch(url, { cache: "no-store" });
+    if (!res.ok) {
+      throw new Error(`Failed to fetch artwork: ${res.statusText}`);
+    }
+    return await res.json();
+  } catch (error) {
+    console.error("Error fetching artist artwork:", error);
+    return null;
+  }
+};
+
+
 export const getArtworkDetails = async (id) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/artwork/${id}`, { cache: "no-store" });
   return res.json();

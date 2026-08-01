@@ -1,8 +1,10 @@
 "use client";
 import { useState, useEffect } from "react";
 import ArtCard from "@/app/components/ArtCard";
-import { getArtistArtwork } from "@/utilies/action";
+import { getArtistArtwork, getArtistArtworkPublic } from "@/utilies/action";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Pagination } from "@heroui/react";
+import Link from "next/link";
 
 export default function BrowseArtworkPage() {
   const router = useRouter();
@@ -15,28 +17,50 @@ export default function BrowseArtworkPage() {
   const [maxPrice, setMaxPrice] = useState(searchParams.get("maxPrice") || "");
   const [sort, setSort] = useState(searchParams.get("sort") || "newest");
   const [artworks, setArtworks] = useState([]);
+//newly added
+  const [page, setPage] = useState(Number(searchParams.get("page")) || 1);
+  const [totalPage, setTotalPage] = useState(0);
+  const [limit, setLimit] = useState(6);
 
-  // Fetch data
-  useEffect(() => {
+
+ useEffect(() => {
     const fetchData = async () => {
-      const data = await getArtistArtwork();
-      setArtworks(data);
+      const data = await getArtistArtworkPublic(
+        search,
+        category,
+        minPrice,
+        maxPrice,
+        sort,      
+        limit,
+        page            
+      );
+      setArtworks(data?.result || []);
+      setPage(data?.currentPage || 1);
+      setLimit(data?.perPage || 6);
+      setTotalPage(data?.totalPages || 0);
     };
     fetchData();
-  }, []);
+  }, [search, category, minPrice, maxPrice, sort, page, limit,  ]);
 
   // Update URL when filters change
-  const updateURL = (newSearch, newCategory, newMin, newMax, newSort) => {
+  const updateURL = (newSearch, newCategory, newMin, newMax, newSort,newPage=1) => {
     const params = new URLSearchParams();
     if (newSearch) params.set("search", newSearch);
     if (newCategory) params.set("category", newCategory);
     if (newMin) params.set("minPrice", newMin);
     if (newMax) params.set("maxPrice", newMax);
     if (newSort) params.set("sort", newSort);
+     params.set("page", newPage);
 
     const queryString = params.toString();
     router.push(`/browse${queryString ? `?${queryString}` : ""}`);
+    setPage(newPage)
   };
+  // Build pages array
+  const pages = [];
+  for (let i = 1; i <= totalPage; i++) {
+    pages.push(i);
+  }
 
   // Filter + Sort Logic
   const filteredArtworks = artworks
@@ -87,11 +111,11 @@ export default function BrowseArtworkPage() {
             className="border rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-purple-600"
           >
             <option value="">All Categories</option>
-            <option value="painting">Painting</option>
-            <option value="sculpture">Sculpture</option>
-            <option value="digital">Digital Art</option>
+            <option value="Painting">Painting</option>
+            <option value="Sculpture">Sculpture</option>
+            <option value="Digital">Digital Art</option>
           </select>
-
+          
           {/* Price range */}
           <div className="flex gap-2">
             <input
@@ -132,7 +156,6 @@ export default function BrowseArtworkPage() {
         </div>
       </div>
 
-      {/* Render Filtered Artworks */}
       {/* Render Filtered Artworks or Empty State */}
 {filteredArtworks.length === 0 ? (
   <div className="flex flex-col items-center justify-center bg-gray-50 border border-gray-200 rounded-lg shadow-md p-10">
@@ -153,11 +176,49 @@ export default function BrowseArtworkPage() {
     </p>
   </div>
 ) : (
-  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+  <div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
     {filteredArtworks.map((art, index) => (
       <ArtCard key={index} art={art} />
-    ))}
+    ))}    
   </div>
+  <Pagination size="sm" className="justify-center mt-6">
+            <Pagination.Content>
+              <Pagination.Item>
+                <Pagination.Previous
+                  isDisabled={page === 1}
+                  onPress={() => updateURL(search, category, minPrice, maxPrice, sort, page - 1)}
+                >
+                  <Pagination.PreviousIcon /> Prev
+                </Pagination.Previous>
+              </Pagination.Item>
+
+              {pages.map((p) => (
+                <Pagination.Item key={p}>
+                  <Pagination.Link
+                    isActive={p === page}
+                    className={p === page ? "bg-gray-200" : ""}
+                    onPress={() => updateURL(search, category, minPrice, maxPrice, sort, p)}
+                  >
+                    {p}
+                  </Pagination.Link>
+                </Pagination.Item>
+              ))}
+
+              <Pagination.Item>
+                <Pagination.Next
+                  isDisabled={page === totalPage}
+                  onPress={() => updateURL(search, category, minPrice, maxPrice, sort, page + 1)}
+                >
+                  Next <Pagination.NextIcon />
+                </Pagination.Next>
+              </Pagination.Item>
+            </Pagination.Content>
+  </Pagination>
+  </div>
+
 )}
 
     </div>

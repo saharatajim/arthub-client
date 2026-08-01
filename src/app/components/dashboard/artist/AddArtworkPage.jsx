@@ -142,7 +142,7 @@ const newArtwork = {
       <option value="">Select category</option>
       <option value="Painting">Painting</option>
       <option value="Digital">Digital</option>
-      <option value="Photography">Photography</option>
+      
       <option value="Sculpture">Sculpture</option>
     </select>
   </div>
