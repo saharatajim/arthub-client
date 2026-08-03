@@ -55,6 +55,8 @@ const limit = tierLimit[subPlan];
                 <input className="hidden" readOnly name="sellerMail" value={artwork.artistMail} />
                 <input className="hidden" readOnly name="image" value={artwork.image} />
               </form>
+
+
             ) : (
               <p className="text-red-600 font-semibold text-center">If You are not a Buyer you cant purchase <br />or <br />
                 You’ve reached your purchase limit for the {subPlan} plan.  
@@ -64,6 +66,7 @@ const limit = tierLimit[subPlan];
 
            
           </div>
+
         </div>
       </div>
     </div>
