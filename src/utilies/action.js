@@ -1,5 +1,7 @@
 "use server"
 
+import { getTokenServer } from "./cors";
+
 // ✅ Organization
 export const addOrganization = async (organizationData) => {
   try {
@@ -117,17 +119,28 @@ export const getArtworkDetails = async (id) => {
 };
 
 export const deleteArt = async (id) => {
+  const token=await getTokenServer()
+
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/artwork/${id}`, {
     method: "DELETE",
+    headers: {
+        "Content-Type": "application/json" ,
+        authorization:`Bearer ${token}`
+      },
     cache: "no-store"
   });
   return res.json(); 
 };
 
 export const updateArtwork = async (id, modifiedData) => {
+    const token=await getTokenServer()
+
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/artwork/${id}`, {
     method: "PATCH",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+        "Content-Type": "application/json" ,
+        authorization:`Bearer ${token}`
+      },
     body: JSON.stringify(modifiedData),
     cache: "no-store"
   });
@@ -135,10 +148,15 @@ export const updateArtwork = async (id, modifiedData) => {
 };
 
 export const addArtworkToDb = async (artworkData) => {
+
+  const token=await getTokenServer()
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/artwork`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json" ,
+        authorization:`Bearer ${token}`
+      },
       body: JSON.stringify(artworkData),
       cache: "no-store"
     });

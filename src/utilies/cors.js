@@ -18,3 +18,10 @@ export const getUserClient=async()=>{
     } = authClient.useSession() 
     return session?.user
 }
+
+export const getTokenServer=async ()=>{
+  const {token}=await auth.api.getToken({
+    headers:await headers()
+  })
+  return token || null;
+}

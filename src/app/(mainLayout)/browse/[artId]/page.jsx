@@ -13,7 +13,7 @@ const ArtDetailsPage = async({params}) => {
     const subPlan=user?.subscriptionPlan 
     const buyerPurchase=await getBuyerPurchases(userMail)
      const buyerTotalPurchased=buyerPurchase?.length
-    console.log(role);
+ 
 
 
     return (
