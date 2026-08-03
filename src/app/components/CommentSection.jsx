@@ -1,10 +1,26 @@
 "use client";
 
-import { addComment } from "@/utilies/action";
+import { addComment, deleteComment, updateComment } from "@/utilies/action";
 import React from "react";
 
-const CommentSection = ({artId,userMail,userId,getComm,userName}) => {
+const CommentSection = ({artId,userMail,userId,getComm,userName,allPurchases}) => {
+  const isExist=allPurchases.find(p=>p.productId==artId)
+  console.log(isExist);
+  const isBuyerExist=allPurchases.find(p=>p.buyerMail==userMail)
     const comments=getComm.comments
+
+    const handleDelete = async (commentId) => {
+  try {
+    const result = await deleteComment(artId, commentId);
+    if (result.success) {
+      alert("Comment deleted successfully!");
+      window.location.reload(); // ✅ reload after delete
+    }
+  } catch (err) {
+    console.error("Error deleting comment:", err.message);
+  }
+};
+
 
 const onSubmit = async (e) => {
   e.preventDefault();
@@ -29,20 +45,22 @@ const onSubmit = async (e) => {
     <div className="container mx-auto">
     
       {/* Add Comment Form */}
-      <form onSubmit={onSubmit} className="flex gap-2 mb-4">
-        <input
-          name="comment"
-          type="text"
-          placeholder="Write a comment..."
-          className="flex-1 border border-gray-300 dark:border-gray-600 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:text-gray-200"
-        />
-        <button
-          type="submit"
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
-        >
-          Add
-        </button>
-      </form>
+      {isExist && (
+        <form onSubmit={onSubmit} className="flex gap-2 mb-4">
+          <input
+            name="comment"
+            type="text"
+            placeholder="Write a comment..."
+            className="flex-1 border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+          <button
+            type="submit"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+          >
+            Add
+          </button>
+        </form>
+      )}
         {/* Comment List */}
       <div className="space-y-4 mt-6">
       <h2 className="text-lg font-bold">Comments</h2>
@@ -54,11 +72,30 @@ const onSubmit = async (e) => {
             <div className="flex justify-between items-center mb-1">
               <span className="font-semibold text-purple-600">{c.commentData.userName}</span>
               <span className="text-sm text-gray-400">
-                {new Date(c.createdAt).toLocaleString()}
-              </span>
+  {new Date(c.createdAt).toISOString()}
+</span>
+
             </div>
             <p className="text-gray-700">{c.commentData.comment}</p>
+
+             {isBuyerExist && (
+      <div className="flex gap-3 mt-2">
+         <button
+      className="text-blue-600 hover:underline"
+    
+    >
+      Edit
+    </button>
+        <button
+      className="text-red-600 hover:underline"
+      onClick={() => handleDelete(c._id)}
+    >
+      Delete
+    </button>
+      </div>
+    )}
           </div>
+          
         ))
       )}
     </div>

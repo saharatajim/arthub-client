@@ -323,3 +323,42 @@ export async function getComments(artworkId) {
 
   return res.json();
 }
+
+export async function deleteComment(artworkId, commentId) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER}/artwork/${artworkId}/comments/${commentId}`,
+    {
+      method: "DELETE",
+      cache: "no-store", // ✅ prevent caching
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to delete comment");
+  }
+
+  return res.json();
+}
+
+export async function updateComment(artworkId, commentId, updatedData) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER}/artwork/${artworkId}/comments/${commentId}`,
+    {
+      method: "PATCH",
+      cache: "no-store", // ✅ prevent caching
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedData), // ✅ নতুন data পাঠানো হচ্ছে
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to update comment");
+  }
+
+  return res.json();
+}
