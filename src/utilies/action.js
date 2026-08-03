@@ -285,3 +285,41 @@ export async function getTopArtist() {
   if (!res.ok) throw new Error("Failed to fetch category chart data");
   return res.json();
 }
+
+
+//comments
+
+export async function addComment(artworkId, commentData) {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/artwork/${artworkId}/comments`, {
+    method: "POST",
+    cache: "no-store", // ✅ prevent caching
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      commentData,
+    }),
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to add comment");
+  }
+
+  return res.json();
+}
+
+export async function getComments(artworkId) {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/artwork/${artworkId}/comments`, {
+    method: "GET",
+    cache: "no-store", // ✅ prevent caching
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch comments");
+  }
+
+  return res.json();
+}
